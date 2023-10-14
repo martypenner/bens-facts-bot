@@ -8,8 +8,7 @@ import {
   InteractionType,
   verifyKey,
 } from 'discord-interactions';
-import { AWW_COMMAND, INVITE_COMMAND } from './commands.js';
-import { getCuteUrl } from './reddit.js';
+import { ADD_COMMAND, LIST_COMMAND } from './commands.js';
 import { InteractionResponseFlags } from 'discord-interactions';
 
 class JsonResponse extends Response {
@@ -29,7 +28,7 @@ const router = Router();
 /**
  * A simple :wave: hello page to verify the worker is working.
  */
-router.get('/', (request, env) => {
+router.get('/', (_request, env) => {
   return new Response(`👋 ${env.DISCORD_APPLICATION_ID}`);
 });
 
@@ -58,22 +57,20 @@ router.post('/', async (request, env) => {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     // Most user commands will come as `APPLICATION_COMMAND`.
     switch (interaction.data.name.toLowerCase()) {
-      case AWW_COMMAND.name.toLowerCase(): {
-        const cuteUrl = await getCuteUrl();
+      case LIST_COMMAND.name.toLowerCase(): {
         return new JsonResponse({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: cuteUrl,
+            content: 'list',
+            flags: InteractionResponseFlags.EPHEMERAL,
           },
         });
       }
-      case INVITE_COMMAND.name.toLowerCase(): {
-        const applicationId = env.DISCORD_APPLICATION_ID;
-        const INVITE_URL = `https://discord.com/oauth2/authorize?client_id=${applicationId}&scope=applications.commands`;
+      case ADD_COMMAND.name.toLowerCase(): {
         return new JsonResponse({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
-            content: INVITE_URL,
+            content: 'add',
             flags: InteractionResponseFlags.EPHEMERAL,
           },
         });
