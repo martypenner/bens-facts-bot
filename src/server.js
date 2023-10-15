@@ -46,8 +46,14 @@ async function getFacts() {
     const data = await fs.readFile(FACTS_FILE);
     return JSON.parse(data);
   } catch (error) {
-    console.error('Error reading facts file:', error);
-    return [];
+    if (error.code === 'ENOENT') {
+      // File doesn't exist; write an empty array
+      await fs.writeFile(FACTS_FILE, '[]');
+      return [];
+    } else {
+      console.error('Error reading facts file:', error);
+      return [];
+    }
   }
 }
 
