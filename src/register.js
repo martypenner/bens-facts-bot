@@ -1,4 +1,4 @@
-import { ADD_COMMAND, LIST_COMMAND } from './commands.js';
+import { ADD_COMMAND, SELECT_COMMAND } from './commands.js';
 import dotenv from 'dotenv';
 import process from 'node:process';
 
@@ -34,7 +34,7 @@ const response = await fetch(url, {
     Authorization: `Bot ${token}`,
   },
   method: 'PUT',
-  body: JSON.stringify([LIST_COMMAND, ADD_COMMAND]),
+  body: JSON.stringify([ADD_COMMAND, SELECT_COMMAND]),
 });
 
 if (response.ok) {

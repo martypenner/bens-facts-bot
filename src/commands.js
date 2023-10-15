@@ -3,9 +3,9 @@
  * and registration.
  */
 
-export const LIST_COMMAND = {
-  name: 'list',
-  description: "List Ben's Facts!",
+export const SELECT_COMMAND = {
+  name: 'select',
+  description: "Select which of Ben's Facts to use!",
 };
 
 export const ADD_COMMAND = {
