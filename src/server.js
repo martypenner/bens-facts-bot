@@ -239,4 +239,4 @@ const ittyServer = createServerAdapter((request, env, ctx) => {
 });
 
 const httpServer = createServer(ittyServer);
-httpServer.listen(8787);
+httpServer.listen(process.env.PORT ?? 8787);
