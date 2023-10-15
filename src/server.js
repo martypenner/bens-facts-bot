@@ -6,7 +6,6 @@ import 'isomorphic-fetch';
 import { createServerAdapter } from '@whatwg-node/server';
 import { createServer } from 'node:http';
 import fs from 'fs/promises';
-import { fileURLToPath } from 'url';
 import path from 'path';
 import {
   InteractionResponseFlags,
@@ -18,9 +17,6 @@ import {
 } from 'discord-interactions';
 import { error, Router } from 'itty-router';
 import { ADD_COMMAND, SELECT_COMMAND } from './commands.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 class JsonResponse extends Response {
   constructor(body, init) {
@@ -43,7 +39,7 @@ function validateUserAccess(username) {
 
 const router = Router();
 
-const FACTS_FILE = path.join(__dirname, '../data/facts.json');
+const FACTS_FILE = path.resolve(process.env.DATA_DIR ?? './data', 'facts.json');
 
 async function getFacts() {
   try {
